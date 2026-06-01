@@ -16,10 +16,12 @@ class Linked_list:
             while(temp.next!=None):
                 temp=temp.next
             temp.next=new_node
+        print(f"{data} inserted in linked list")
             
     def travers(self):
         if self.head==None:
             print("empty linked list")
+            return
         temp=self.head
         while temp!=None:
             print(temp.data,end="->")
@@ -33,6 +35,7 @@ class Linked_list:
         else:
             new_node.next=self.head
             self.head=new_node
+        print(f"{data} inserted in linked list")
             
     def insert_index(self,data,k):
         new_node=node(data)
@@ -48,6 +51,7 @@ class Linked_list:
             temp=temp.next
         new_node.next=temp.next
         temp.next=new_node
+        print(f"{data} inserted at {k} index of linked list")
         
     def delete_end(self):
         if self.head is None:
@@ -55,7 +59,7 @@ class Linked_list:
             return
 
         if self.head.next==None:
-            print("1 node present")
+            print("only data deleted")
             self.head=None
             return
         
@@ -63,7 +67,8 @@ class Linked_list:
         while temp.next.next!=None:
             temp=temp.next
         temp.next=None
-        
+        print("end data deleted from linked list")
+          
     def delete_beggining(self):
         if self.head is None:
             print("empty linked list")
@@ -71,16 +76,16 @@ class Linked_list:
         if self.head.next==None:
             self.head=None
             return
-        temp=self.head
-        self.head=temp.next
+        self.head=self.head.next
+        print("beggining data deleted from linked list")
         
     def delete_index(self,k):
         if self.head==None:
             print("empty linked list")
             return
         if k==0:
-            self.head=None
-        
+            self.head=self.head.next
+            return
         temp=self.head
         for i in range(k-1):
             if not temp:
@@ -88,7 +93,8 @@ class Linked_list:
                 return 
             temp=temp.next
         temp.next=temp.next.next
-              
+        print(f"{k} index data deleted from linked list")
+                  
     def delete_value(self,data):
         if self.head is None:
             print("empty list")
@@ -98,15 +104,16 @@ class Linked_list:
             return
         c=0
         temp=self.head
-        while temp!=None:
+        while temp.next!=None:
             if temp.next.data==data:
                 temp.next=temp.next.next
                 c=1
                 break
             temp=temp.next
-        if c==0:
-            print("no data found")
-            
+        if c == 1:
+            print(f"{data} deleted from linked list")  
+        else:
+            print("no data found")    
     
     def search_index(self,k):
         if self.head==None:
@@ -118,7 +125,7 @@ class Linked_list:
                 print("index error")
                 return
             temp=temp.next
-        print(temp.data)
+        print(f"{temp.data} is the value for index{k}")
             
     def search_value(self,data):
         
@@ -130,7 +137,7 @@ class Linked_list:
         n=0
         while temp!=None:
             if temp.data==data:
-                print(n)
+                print(f"{n} is the index for value {data}")
                 c=1
                 break
             else:
@@ -139,7 +146,27 @@ class Linked_list:
         if c==0:
             print("no data found")
     
-
+    def reverse(self):
+        if self.head==None:
+            print("empty linked list")
+            return
+        
+        prv=None
+        curr= self.head
+        while curr!=None:
+            Next_node=curr.next
+            curr.next=prv
+            prv=curr
+            curr=Next_node
+        
+        self.head=prv
+        temp=self.head
+        while temp!=None:
+            print(temp.data,end="->")
+            temp=temp.next
+        print("none")
+        
+    
 print('''1.insert at end
          2.insert at beggining
          3.insert at any position
@@ -150,7 +177,9 @@ print('''1.insert at end
          8.search by position
          9.search by value
          10.traverse
-         11.exit''')
+         11.reverse
+         12.exit''')
+
 l=Linked_list()
 while(True):
     ch=int(input("enter choice:- "))
@@ -158,40 +187,45 @@ while(True):
         case 1:
             data=int(input("enter data to insert at end of linked list:- "))
             l.insert_end(data)
-            print(f"{data} inserted in linked list")
+            
         case 2:
             data=int(input("enter data to insert at beggining of linked list:- "))
             l.insert_beggining(data)
-            print(f"{data} inserted in linked list")
+            
         case 3:
             data=int(input("enter data to insert at specific index of linked list:- "))
             k=int(input("enter index:- "))
             l.insert_index(data,k)
-            print(f"{data} inserted at {k} index of linked list")
+            
         case 4:
             l.delete_end()
-            print("end data deleted from linked list")
+            
         case 5:
             l.delete_beggining()
-            print("beggining data deleted from linked list")
+            
         case 6:
             k=int(input("enter index from where data will be deleted:- "))
             l.delete_index(k)
-            print(f"{k} index data deleted from linked list")
+            
         case 7:
             data=int(input("enter data to be deleted from linked list:- "))
             l.delete_value(data)
-            print(f"{data} deleted from linked list")
+            
         case 8:
             k=int(input("enter search index:- "))
             l.search_index(k)
+            
         case 9:
-            data=int(input("enter data to be deleted from linked list:- "))
+            data=int(input("enter data to be searched from linked list:- "))
             l.search_value(data)
+            
         case 10:
             print("current linked list:-",end="")
             l.travers()
         case 11:
+            l.reverse()
+        case 12:
+            print("you ended the program")
             exit()
    
             
